@@ -3,25 +3,37 @@ function setup() {
   fill(102, 255, 102);
   textAlign(CENTER, CENTER);
   textFont("Courier New", width / 12);
-
-  // month is 0-indexed
-  // day is 1-indexed
-  oneyear = new Date(Date.UTC(1971, 0));
-  s = new Date(year(), 0);
-  e = new Date(year() + 1, 0) - s;
-  bs = new Date(1997, 10, 7, 17, 11, 0);
 }
 
 function draw() {
   background(0);
 
-  n = Date.now() - s;
-  bn = Date.now() - bs;
+  // month is 0-indexed
+  // day is 1-indexed
 
-  text(
-    (year() + n / e).toFixed(12) + "\n  " +
-    (bn / oneyear).toFixed(12),
-    width / 2,
-    height / 2
-  );
+  const y = 1997;
+  const m = 10; // month is 0-indexed
+  const d = 7; // day is 1-indexed
+  const h = 17;
+  const i = 11;
+
+  var Now = new Date();
+
+  const YearStart = new Date(year(), 0);
+  const YearEnd = new Date(year() + 1, 0) - YearStart;
+  var YearNow = (year() + (Now - YearStart) / YearEnd).toFixed(12);
+
+  var BirthStart = new Date(year() - 1, m, d, h, i);
+  var BirthEnd = new Date(year(), m, d, h, i) - BirthStart;
+  var Age = year() - y - 1;
+  var BirthNow = (Now - BirthStart) / BirthEnd;
+  if (BirthNow >= 1) {
+    BirthStart = new Date(year(), m, d, h, i);
+    BirthEnd = new Date(year() + 1, m, d, h, i) - BirthStart;
+    Age = year() - y;
+    BirthNow = (Now - BirthStart) / BirthEnd;
+  }
+
+  text(YearNow + "\n  " + (Age + BirthNow).toFixed(12),
+       width / 2, height / 2);
 }
