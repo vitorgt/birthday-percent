@@ -13,8 +13,6 @@ const t = 25;
 const n = Math.ceil((DeathDay - BirthDay) / Week);
 var r = 0;
 var c = 0;
-var dis = 0;
-const alph = 0.5;
 var BSize = 0;
 
 function setup() {
@@ -29,7 +27,7 @@ function setup() {
     r = Math.round(Math.sqrt(n / (width / height)));
   }
   c = Math.ceil(n / r);
-  console.log(width / height, r, c, r * c, n);
+  // console.log(width / height, r, c, r * c, n);
 
   BSize = Math.min((width - t * 2) / c, (height - t * 2) / r);
   dis = BSize / 4;
@@ -53,39 +51,50 @@ function draw() {
   let j = 0;
   let i = 0;
 
+
   let green1 = 'rgba(102, 255, 102, 1)';
-  let greenAlpha = 'rgba(102, 255, 102, ' + alph + ')';
-  let grey1 = 'rgba(62, 74, 60, ' + alph + ')';
+  let greenAlpha = 'rgba(102, 255, 102, ' + 0.4 + ')';
+  let greyAlpha = 'rgba(62, 74, 60, ' + 0.8 + ')';
 
-  strokeWeight(0.3);
-  stroke(greenAlpha);
-  fill(grey1);
-  for (j = 0; j < r && count < Math.floor(Weeks); j++) {
-    for (i = 0; i < c && count < Math.floor(Weeks); i++, count++) {
-      rect(i * BSize + t + irest, j * BSize + t + jrest, BSize - dis, BSize - dis);
-    }
-    if (count >= Math.floor(Weeks)) break;
-  }
-
-  noFill();
-  rect(i * BSize + t + irest, j * BSize + t + jrest, BSize - dis, BSize - dis);
 
   noStroke();
-  fill(grey1);
-  rect(i * BSize + t + irest, j * BSize + t + jrest, BSize - dis, (BSize - dis) * (Weeks % 1));
+  fill(greyAlpha);
+  let completeR = Math.floor(Weeks / c);
+  let completeC = Math.floor(Weeks - completeR * c);
+  rect(t + irest, t + jrest,
+    c * BSize, completeR * BSize);
+  rect(t + irest, completeR * BSize + t + jrest,
+    completeC * BSize, BSize);
+  rect(completeC * BSize + t + irest,
+    completeR * BSize + t + jrest,
+    BSize, BSize * (Weeks % 1));
 
-  i++;
 
-  strokeWeight(0.3);
+  strokeWeight(1);
   stroke(greenAlpha);
-  noFill();
-  for (; i < c && count < n; i++, count++) {
-    rect(i * BSize + t + irest, j * BSize + t + jrest, BSize - dis, BSize - dis);
+  completeC = Math.floor(n - Math.floor(n / c) * c);
+
+  for (j = 0; j < r; j++) {
+    line(t + irest, j * BSize + t + jrest,
+      c * BSize + t + irest, j * BSize + t + jrest);
   }
-  j++;
-  for (; j < r && count < n; j++) {
-    for (i = 0; i < c && count < n; i++, count++) {
-      rect(i * BSize + t + irest, j * BSize + t + jrest, BSize - dis, BSize - dis);
+  line(t + irest, j * BSize + t + jrest,
+    completeC * BSize + t + irest, j * BSize + t + jrest);
+  if (completeC) {
+    for (i = 0; i <= completeC; i++) {
+      line(i * BSize + t + irest, t + jrest,
+        i * BSize + t + irest, r * BSize + t + jrest);
+    }
+    for (; i <= c; i++) {
+      line(i * BSize + t + irest, t + jrest,
+        i * BSize + t + irest, (r - 1) * BSize + t + jrest);
+    }
+  } else {
+    line(t + irest, j * BSize + t + jrest,
+      c * BSize + t + irest, j * BSize + t + jrest);
+    for (i = 0; i <= c; i++) {
+      line(i * BSize + t + irest, t + jrest,
+        i * BSize + t + irest, r * BSize + t + jrest);
     }
   }
 
