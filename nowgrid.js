@@ -21,6 +21,7 @@ const Grey080 = 'rgba(62, 74, 60, 0.8)';
 
 var YearStart = null;
 var YearEnd = null;
+var Age = null;
 var AgeStart = null;
 var AgeEnd = null;
 
@@ -41,6 +42,7 @@ function setup() {
 
   YearStart = new Date(year(), 0);
   YearEnd = new Date(year() + 1, 0);
+  Age = year() - BirthY - 1;
   AgeStart = new Date(year() - 1, BirthMo, BirthD, BirthH, BirthMi);
   AgeEnd = new Date(year(), BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
 }
@@ -50,8 +52,6 @@ function draw() {
 
   let Now = new Date();
   let Weeks = (Now - BirthDay) / Week;
-
-  let YearNow = (year() + (Now - YearStart) / (YearEnd - YearStart)).toFixed(12);
 
 
   // how much is left by the grid border, to centralize the grid
@@ -131,13 +131,13 @@ function draw() {
   noStroke();
   fill(Green100);
 
-  let Age = year() - BirthY - 1;
+  let YearNow = (year() + (Now - YearStart) / (YearEnd - YearStart)).toFixed(12);
   let AgeNow = (Now - AgeStart) / AgeEnd;
+
   if (AgeNow >= 1) {
     AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi);
     AgeEnd = new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
     Age = year() - BirthY;
-    AgeNow = (Now - AgeStart) / AgeEnd;
   }
 
   text(YearNow + "\n  " + (Age + AgeNow).toFixed(12),
