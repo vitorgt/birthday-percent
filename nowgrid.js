@@ -27,7 +27,7 @@ var AgeEnd = null;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  pixelDensity(displayDensity());
+  pixelDensity(2 * displayDensity());
   textAlign(CENTER, CENTER);
   textFont("Courier New", width / 12);
 
