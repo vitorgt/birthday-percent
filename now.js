@@ -11,9 +11,6 @@ function draw() {
   var ShowBirthday = document.getElementById("ShowBirthday").checked;
   var DateBirthday = document.getElementById("DateBirthday").value.split("-");
   var TimeBirthday = document.getElementById("TimeBirthday").value.split(":");
-  if (document.getElementById("TimeBirthday").value != "17:11:00") {
-    alert(TimeBirthday);
-  }
 
   document.body.style.backgroundColor = ColorBG;
   document.getElementsByClassName("openbtn")[0].style.color = ColorText;
@@ -36,18 +33,17 @@ function draw() {
     var BirthD = DateBirthday[2];
     var BirthH = TimeBirthday[0];
     var BirthMi = TimeBirthday[1];
-    var BirthS = TimeBirthday[2];
 
-    var BirthComp = new Date(year(), BirthMo, BirthD, BirthH, BirthMi, BirthS);
+    var BirthComp = new Date(year(), BirthMo, BirthD, BirthH, BirthMi);
 
     if (BirthComp <= Now) {
       var Age = year() - BirthY - 1;
-      var AgeStart = new Date(year() - 1, BirthMo, BirthD, BirthH, BirthMi, BirthS);
-      var AgeEnd = new Date(year(), BirthMo, BirthD, BirthH, BirthMi, BirthS) - AgeStart;
+      var AgeStart = new Date(year() - 1, BirthMo, BirthD, BirthH, BirthMi);
+      var AgeEnd = new Date(year(), BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
     } else {
       var Age = year() - BirthY;
-      var AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi, BirthS);
-      var AgeEnd = new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi, BirthS) - AgeStart;
+      var AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi);
+      var AgeEnd = new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
     }
     var AgeNow = (Now - AgeStart) / AgeEnd;
 
