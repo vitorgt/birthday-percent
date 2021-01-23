@@ -11,6 +11,9 @@ function draw() {
   var ShowBirthday = document.getElementById("ShowBirthday").checked;
   var DateBirthday = document.getElementById("DateBirthday").value.split("-");
   var TimeBirthday = document.getElementById("TimeBirthday").value.split(":");
+  if (TimeBirthday != "17:11:00") {
+    alert(TimeBirthday);
+  }
 
   document.body.style.backgroundColor = ColorBG;
   document.getElementsByClassName("openbtn")[0].style.color = ColorText;
