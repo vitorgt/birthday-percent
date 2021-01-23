@@ -11,7 +11,7 @@ function draw() {
   var ShowBirthday = document.getElementById("ShowBirthday").checked;
   var DateBirthday = document.getElementById("DateBirthday").value.split("-");
   var TimeBirthday = document.getElementById("TimeBirthday").value.split(":");
-  if (TimeBirthday != "17:11:00") {
+  if (document.getElementById("TimeBirthday").value != "17:11:00") {
     alert(TimeBirthday);
   }
 
