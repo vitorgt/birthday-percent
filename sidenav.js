@@ -7,3 +7,9 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+
+/* Reset localStorage and reload page */
+function resetReload() {
+    localStorage.clear();
+    location.reload();
+}

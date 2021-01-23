@@ -1,23 +1,34 @@
+function automateInput(id, data) {
+  let obj = document.getElementById(id);
+  if (!localStorage.getItem(id)) {
+    localStorage.setItem(id, obj[data]);
+  }
+  obj[data] = localStorage.getItem(id);
+  obj.addEventListener("change", function () {
+    localStorage.setItem(id, obj[data]);
+  });
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   pixelDensity(displayDensity());
   textAlign(CENTER, CENTER);
   textFont("Courier New", width / 12);
+
+  automateInput("ColorBG", "value");
+  automateInput("ColorText", "value");
+  automateInput("ShowBirthday", "checked");
+  automateInput("DateBirthday", "value");
+  automateInput("TimeBirthday", "value");
 }
 
 function draw() {
-  var ColorBG = document.getElementById("ColorBG").value;
-  var ColorText = document.getElementById("ColorText").value;
-  var ShowBirthday = document.getElementById("ShowBirthday").checked;
-  var DateBirthday = document.getElementById("DateBirthday").value.split("-");
-  var TimeBirthday = document.getElementById("TimeBirthday").value.split(":");
-
-  document.body.style.backgroundColor = ColorBG;
-  document.getElementsByClassName("openbtn")[0].style.color = ColorText;
-
-  background(ColorBG);
+  background(localStorage.getItem("ColorBG"));
   noStroke();
-  fill(ColorText);
+  fill(localStorage.getItem("ColorText"));
+
+  document.body.style.backgroundColor = localStorage.getItem("ColorBG");
+  document.getElementsByClassName("openbtn")[0].style.color = localStorage.getItem("ColorText");
 
   let Now = new Date();
 
@@ -28,6 +39,9 @@ function draw() {
   var AgeText = "";
 
   if (ShowBirthday) {
+    let DateBirthday = localStorage.getItem("DateBirthday").split("-");
+    let TimeBirthday = localStorage.getItem("TimeBirthday").split(":");
+
     var BirthY = DateBirthday[0];
     var BirthMo = DateBirthday[1] - 1; // month is 0-indexed
     var BirthD = DateBirthday[2];
