@@ -1,46 +1,55 @@
-const BirthY = 1997;
-const BirthMo = 10; // month is 0-indexed
-const BirthD = 7;
-const BirthH = 17;
-const BirthMi = 11;
-
-const Green100 = 'rgba(102, 255, 102, 1)';
-
-var YearStart = null;
-var YearEnd = null;
-var Age = null;
-var AgeStart = null;
-var AgeEnd = null;
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   pixelDensity(displayDensity());
   textAlign(CENTER, CENTER);
   textFont("Courier New", width / 12);
-
-  YearStart = new Date(year(), 0);
-  YearEnd = new Date(year() + 1, 0);
-  Age = year() - BirthY - 1;
-  AgeStart = new Date(year() - 1, BirthMo, BirthD, BirthH, BirthMi);
-  AgeEnd = new Date(year(), BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
 }
 
 function draw() {
-  background(0);
+  var ColorBG = document.getElementById("ColorBG").value;
+  var ColorText = document.getElementById("ColorText").value;
+  var ShowBirthday = document.getElementById("ShowBirthday").checked;
+  var DateBirthday = document.getElementById("DateBirthday").value.split("-");
+  var TimeBirthday = document.getElementById("TimeBirthday").value.split(":");
+
+  document.body.style.backgroundColor = ColorBG;
+  document.getElementsByClassName("openbtn")[0].style.color = ColorText;
+
+  background(ColorBG);
   noStroke();
-  fill(Green100);
+  fill(ColorText);
 
   let Now = new Date();
 
-  let YearNow = (year() + (Now - YearStart) / (YearEnd - YearStart)).toFixed(12);
-  let AgeNow = (Now - AgeStart) / AgeEnd;
+  var YearStart = new Date(year(), 0);
+  var YearEnd = new Date(year() + 1, 0);
+  var YearNow = (year() + (Now - YearStart) / (YearEnd - YearStart)).toFixed(12);
 
-  if (AgeNow >= 1) {
-    AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi);
-    AgeEnd = new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
-    Age = year() - BirthY;
+  var AgeText = "";
+
+  if (ShowBirthday) {
+    var BirthY = DateBirthday[0];
+    var BirthMo = DateBirthday[1] - 1; // month is 0-indexed
+    var BirthD = DateBirthday[2];
+    var BirthH = TimeBirthday[0];
+    var BirthMi = TimeBirthday[1];
+    var BirthS = TimeBirthday[2];
+
+    var BirthComp = new Date(year(), BirthMo, BirthD, BirthH, BirthMi, BirthS);
+
+    if (BirthComp <= Now) {
+      var Age = year() - BirthY - 1;
+      var AgeStart = new Date(year() - 1, BirthMo, BirthD, BirthH, BirthMi, BirthS);
+      var AgeEnd = new Date(year(), BirthMo, BirthD, BirthH, BirthMi, BirthS) - AgeStart;
+    } else {
+      var Age = year() - BirthY;
+      var AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi, BirthS);
+      var AgeEnd = new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi, BirthS) - AgeStart;
+    }
+    var AgeNow = (Now - AgeStart) / AgeEnd;
+
+    AgeText = "\n  " + (Age + AgeNow).toFixed(12);
   }
 
-  text(YearNow + "\n  " + (Age + AgeNow).toFixed(12),
-    width / 2, height / 2);
+  text(YearNow + AgeText, width / 2, height / 2);
 }

@@ -53,7 +53,6 @@ function draw() {
   let Now = new Date();
   let Weeks = (Now - BirthDay) / Week;
 
-
   // how much is left by the grid border, to centralize the grid
   const cRest = (width - BSize * c - GridBorder * 2) / 2;
   const rRest = (height - BSize * r - GridBorder * 2) / 2;
@@ -78,7 +77,6 @@ function draw() {
   rect(cComplete * BSize + GridBorder + cRest,
     rComplete * BSize + GridBorder + rRest,
     BSize, BSize * (Weeks % 1));
-
 
   strokeWeight(1);
   stroke(Green040);
@@ -126,7 +124,6 @@ function draw() {
         i * BSize + GridBorder + cRest, r * BSize + GridBorder + rRest);
     }
   }
-
 
   noStroke();
   fill(Green100);

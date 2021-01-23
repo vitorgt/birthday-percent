@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <title>Now</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">  
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    <script src="https://kit.fontawesome.com/7f3114afb1.js" crossorigin="anonymous"></script>
+    <script src="sidenav.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
-
   </head>
+
   <body>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <form action="/action_page.php">
+        <label for="ColorBG">Background</label>
+        <input type="color" id="ColorBG" name="ColorBG" value="#000"><br><br>
+        <label for="ColorText">Text</label>
+        <input type="color" id="ColorText" name="ColorText" value="#66FF66"><br><br>
+        <label for="ShowBirthday">Show Birthday</label>
+        <input type="checkbox" id="ShowBirthday" name="ShowBirthday" checked><br><br>
+        <label for="DateBirthday">Birthday</label>
+        <input type="date" id="DateBirthday" name="DateBirthday" value="1997-11-07" required>
+        <input type="time" id="TimeBirthday" name="TimeBirthday" step="1" value="17:11:00">
+      </form>
+    </div>
+
+    <span class="openbtn" onclick="openNav()"><i class="fas fa-ellipsis-h"></i></span>
+
     <script src="now.js"></script>
   </body>
+
 </html>

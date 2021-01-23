@@ -3,6 +3,60 @@ html, body {
   padding: 0;
   background-color: #000;
 }
+
 canvas {
   display: block;
+  overflow: hidden; /* Disable scroll */
 }
+
+/* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #000; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  text-align: center; /* Center inputs */
+}
+
+/* The navigation menu links */
+.sidenav label, a {
+  font-family: "Courier New";
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 10px;
+  font-size: 20px;
+  color: #66FF66;
+  background-color: transparent;
+}
+
+/* On smaller screens, where height is less than 450px,
+ * change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+} 
