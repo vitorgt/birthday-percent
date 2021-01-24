@@ -8,6 +8,7 @@ var BirthMo = null;
 var BirthD = null;
 var BirthH = null;
 var BirthMi = null;
+var DeathAge = null;
 
 const Week = new Date(Date.UTC(1970, 0, 8));
 const GridBorder = 25;
@@ -23,7 +24,7 @@ function HEXtoRGB(hex, alpha) {
   if (alpha) {
     return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
   } else {
-    return "rgb(" + r + ", " + g + ", " + b + ")";
+    return "rgba(" + r + ", " + g + ", " + b + ", 1.0)";
   }
 }
 
@@ -36,7 +37,7 @@ function updateDate() {
   BirthD = parseInt(DateBirthday[2]);
   BirthH = parseInt(TimeBirthday[0]);
   BirthMi = parseInt(TimeBirthday[1]);
-  let DeathAge = parseInt(localStorage.getItem("DeathAge"));
+  DeathAge = parseInt(localStorage.getItem("DeathAge"));
 
   BirthDay = new Date(BirthY, BirthMo, BirthD, BirthH, BirthMi);
   DeathDay = new Date(BirthY + DeathAge, BirthMo, BirthD, BirthH, BirthMi);
@@ -52,47 +53,74 @@ function updateDate() {
   BSize = Math.min((width - GridBorder * 2) / c, (height - GridBorder * 2) / r);
 }
 
-function automateInput(id, data, isDate) {
+function updateColor(space) {
+  let col = HEXtoRGB(localStorage.getItem(space + "_hex"),
+    localStorage.getItem(space + "_alpha") / 100);
+  console.log(space + "_rgba", col);
+  localStorage.setItem(space + "_rgba", col);
+}
+
+function automateInput(id, data, CheckboxDateColor) {
+  // General == 1; Date == 2; Color = 3;
   let obj = document.getElementById(id);
   if (!localStorage.getItem(id)) {
     localStorage.setItem(id, obj[data]);
   }
   obj[data] = localStorage.getItem(id);
-  if (!isDate) {
+
+  if (CheckboxDateColor == 1) { // Checkbox
     obj.addEventListener("change", function () {
       localStorage.setItem(id, obj[data]);
     });
-  } else {
+  } else if (CheckboxDateColor == 2) { //Date
     obj.addEventListener("change", function () {
       localStorage.setItem(id, obj[data]);
       updateDate();
+    });
+  } else if (CheckboxDateColor == 3) { // Color
+    obj.addEventListener("change", function () {
+      localStorage.setItem(id, obj[data]);
+      let space = id.split("_")[0];
+      updateColor(space);
     });
   }
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  pixelDensity(displayDensity());
+  pixelDensity(Math.max(displayDensity(), 2));
   textAlign(CENTER, CENTER);
   textFont("Courier New", width / 12);
 
-  automateInput("ColorBG", "value", false);
-  automateInput("ColorText", "value", false);
-  automateInput("ShowBirthday", "checked", false);
-  automateInput("ShowGrid", "checked", false);
-  automateInput("GridAlpha", "value", false);
-  automateInput("ColorGone", "value", false);
-  automateInput("DateBirthday", "value", true);
-  automateInput("TimeBirthday", "value", true);
-  automateInput("DeathAge", "value", true);
+  automateInput("ShowYear", "checked", 1);
+  automateInput("ShowBirthday", "checked", 1);
+  automateInput("ShowGrid", "checked", 1);
+
+  automateInput("DateBirthday", "value", 2);
+  automateInput("TimeBirthday", "value", 2);
+  automateInput("DeathAge", "value", 2);
+
+  automateInput("BG_hex", "value", 3);
+  automateInput("Text_hex", "value", 3);
+  automateInput("Text_alpha", "value", 3);
+  automateInput("Grid_hex", "value", 3);
+  automateInput("Grid_alpha", "value", 3);
+  automateInput("Gone_hex", "value", 3);
+  automateInput("Gone_alpha", "value", 3);
+
   updateDate();
+  updateColor("BG");
+  updateColor("Text");
+  updateColor("Grid");
+  updateColor("Gone");
 }
 
 function draw() {
-  background(localStorage.getItem("ColorBG"));
+  console.log(localStorage.getItem("BG_rgba"));
+  background(localStorage.getItem("BG_rgba"));
 
-  document.body.style.backgroundColor = localStorage.getItem("ColorBG");
-  document.getElementsByClassName("openbtn")[0].style.color = localStorage.getItem("ColorText");
+  document.body.style.backgroundColor = localStorage.getItem("BG_rgba");
+  document.getElementsByClassName("openbtn")[0].style.color = localStorage.getItem("Text_hex");
 
   let Now = new Date();
   let Weeks = (Now - BirthDay) / Week;
@@ -105,13 +133,18 @@ function draw() {
     const cRest = (width - BSize * c - GridBorder * 2) / 2;
     const rRest = (height - BSize * r - GridBorder * 2) / 2;
 
+    textSize(GridBorder - 5);
+    let HalfGridBorder = (GridBorder + rRest) / 2;
+    text("Every square is one week of your", width / 2, HalfGridBorder);
+    text("life until you're " + DeathAge + " years old.", width / 2, height - HalfGridBorder);
+
     // how many complete rows have been lived
     let rComplete = Math.floor(Weeks / c);
     // how many complete columns have been lived, at the incomplete row
     let cComplete = Math.floor(Weeks - rComplete * c);
 
     noStroke();
-    fill(HEXtoRGB(localStorage.getItem("ColorGone"), parseFloat(localStorage.getItem("GridAlpha"))/100));
+    fill(localStorage.getItem("Gone_rgba"));
 
     // one big rect to fill all complete rows
     rect(GridBorder + cRest, GridBorder + rRest,
@@ -127,7 +160,7 @@ function draw() {
       BSize, BSize * (Weeks % 1));
 
     strokeWeight(1);
-    stroke(HEXtoRGB(localStorage.getItem("ColorText"), parseFloat(localStorage.getItem("GridAlpha"))/100));
+    stroke(localStorage.getItem("Grid_rgba"));
     noFill();
 
     // how many complete columns have at the incomplete row of LifeWeeks
@@ -177,11 +210,16 @@ function draw() {
   /* Text */
 
   noStroke();
-  fill(localStorage.getItem("ColorText"));
+  fill(localStorage.getItem("Text_rgba"));
 
   var YearStart = new Date(year(), 0);
   var YearEnd = new Date(year() + 1, 0);
-  var YearNow = (year() + (Now - YearStart) / (YearEnd - YearStart)).toFixed(12);
+  var YearNow = "";
+  let boolYear = false;
+  if (localStorage.getItem("ShowYear") == "true") {
+    boolYear = true;
+    YearNow = (year() + (Now - YearStart) / (YearEnd - YearStart)).toFixed(12);
+  }
 
 
   var BirthComp = new Date(year(), BirthMo, BirthD, BirthH, BirthMi);
@@ -195,15 +233,22 @@ function draw() {
     var AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi);
     var AgeEnd = new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi) - AgeStart;
   }
-  document.getElementById("DeathAge").min = Age;
+  // document.getElementById("DeathAge").min = Age;
   var AgeNow = (Now - AgeStart) / AgeEnd;
 
   let digits = Math.floor(Math.max(0, Math.log10(Age))) + 1;
 
   var AgeText = "";
+  let boolAge = false;
   if (localStorage.getItem("ShowBirthday") == "true") {
-    AgeText = "\n" + " ".repeat(4 - digits) + (Age + AgeNow).toFixed(12);
+    boolAge = true;
+    AgeText = " ".repeat(4 - digits) + (Age + AgeNow).toFixed(12);
   }
 
-  text(YearNow + AgeText, width / 2, height / 2);
+  let linefeed = "";
+  if (boolYear && boolAge) {
+    linefeed = "\n";
+  }
+  textSize(width / 12);
+  text(YearNow + linefeed + AgeText, width / 2, height / 2);
 }

@@ -29,7 +29,7 @@ canvas {
 .sidenav label, a {
   font-family: "Courier New";
   text-decoration: none;
-  font-size: 25px;
+  font-size: 15px;
   color: #818181;
   display: block;
 }
@@ -53,6 +53,10 @@ canvas {
   font-size: 20px;
   color: #66FF66;
   background-color: transparent;
+}
+
+.NumberInput {
+  width: 40px;
 }
 
 /* On smaller screens, where height is less than 450px,
