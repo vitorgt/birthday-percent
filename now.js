@@ -56,12 +56,11 @@ function updateDate() {
 function updateColor(space) {
   let col = HEXtoRGB(localStorage.getItem(space + "_hex"),
     localStorage.getItem(space + "_alpha") / 100);
-  console.log(space + "_rgba", col);
   localStorage.setItem(space + "_rgba", col);
 }
 
 function automateInput(id, data, CheckboxDateColor) {
-  // General == 1; Date == 2; Color = 3;
+  // Checkbox == 1; Date == 2; Color = 3;
   let obj = document.getElementById(id);
   if (!localStorage.getItem(id)) {
     localStorage.setItem(id, obj[data]);
@@ -80,8 +79,7 @@ function automateInput(id, data, CheckboxDateColor) {
   } else if (CheckboxDateColor == 3) { // Color
     obj.addEventListener("change", function () {
       localStorage.setItem(id, obj[data]);
-      let space = id.split("_")[0];
-      updateColor(space);
+      updateColor(id.split("_")[0]);
     });
   }
 }
@@ -116,11 +114,11 @@ function setup() {
 }
 
 function draw() {
-  console.log(localStorage.getItem("BG_rgba"));
   background(localStorage.getItem("BG_rgba"));
 
   document.body.style.backgroundColor = localStorage.getItem("BG_rgba");
   document.getElementsByClassName("openbtn")[0].style.color = localStorage.getItem("Text_hex");
+  document.getElementsByClassName("code")[0].style.color = localStorage.getItem("Text_hex");
 
   let Now = new Date();
   let Weeks = (Now - BirthDay) / Week;
