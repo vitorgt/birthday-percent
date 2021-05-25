@@ -1,51 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <title>Now</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
-    <script src="https://kit.fontawesome.com/7f3114afb1.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/7f3114afb1.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="sidenav.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <meta charset="utf-8" />
   </head>
 
   <body>
     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+        >&times;</a
+      >
       <form action="/action_page.php">
         <label for="BG_hex">Background</label>
-        <input type="color" id="BG_hex" name="BG_hex" value="#FFFFFF"><br><br>
+        <input
+          type="color"
+          id="BG_hex"
+          name="BG_hex"
+          value="#FFFFFF"
+        /><br /><br />
         <label for="Text_hex">Text</label>
-        <input type="color" id="Text_hex" name="Text_hex" value="#FF0000">
-        <input type="number" id="Text_alpha" name="Text_alpha" value="100" min="0" max="100" class="NumberInput"><br><br>
+        <input
+          type="color"
+          id="Text_hex"
+          name="Text_hex"
+          value="#FF0000"
+        />
+        <input
+          type="number"
+          id="Text_alpha"
+          name="Text_alpha"
+          value="70"
+          min="0"
+          max="100"
+          class="NumberInput"
+        /><br /><br />
         <label for="Grid_hex">Grid</label>
-        <input type="color" id="Grid_hex" name="Grid_hex" value="#FF0000">
-        <input type="number" id="Grid_alpha" name="Grid_alpha" value="40" min="0" max="100" class="NumberInput"><br><br>
+        <input
+          type="color"
+          id="Grid_hex"
+          name="Grid_hex"
+          value="#FF0000"
+        />
+        <input
+          type="number"
+          id="Grid_alpha"
+          name="Grid_alpha"
+          value="40"
+          min="0"
+          max="100"
+          class="NumberInput"
+        /><br /><br />
         <label for="Gone_hex">Gone Weeks</label>
-        <input type="color" id="Gone_hex" name="Gone_hex" value="#FF0000">
-        <input type="number" id="Gone_alpha" name="Gone_alpha" value="40" min="0" max="100" class="NumberInput"><br><br>
+        <input
+          type="color"
+          id="Gone_hex"
+          name="Gone_hex"
+          value="#FF0000"
+        />
+        <input
+          type="number"
+          id="Gone_alpha"
+          name="Gone_alpha"
+          value="40"
+          min="0"
+          max="100"
+          class="NumberInput"
+        /><br /><br />
         <label for="DateBirthday">Your Birthday</label>
-        <input type="date" id="DateBirthday" name="DateBirthday" value="1997-11-07"><br>
-        <input type="time" id="TimeBirthday" name="TimeBirthday" value="17:11"><br><br>
-        <label for="ShowYear">Show Year <input type="checkbox" id="ShowYear" name="ShowYear" checked></label><br>
-        <label for="ShowBirthday">Show Age <input type="checkbox" id="ShowBirthday" name="ShowBirthday" checked></label><br>
-        <label for="ShowGrid">Show Grid <input type="checkbox" id="ShowGrid" name="ShowGrid" checked></label><br>
+        <input
+          type="date"
+          id="DateBirthday"
+          name="DateBirthday"
+          value="1997-11-07"
+        /><br />
+        <input
+          type="time"
+          id="TimeBirthday"
+          name="TimeBirthday"
+          value="17:11"
+        /><br /><br />
+        <label for="ShowYear"
+          >Show Year
+          <input type="checkbox" id="ShowYear" name="ShowYear" /></label
+        ><br />
+        <label for="ShowBirthday"
+          >Show Age
+          <input
+            type="checkbox"
+            id="ShowBirthday"
+            name="ShowBirthday"
+            checked /></label
+        ><br />
+        <label for="ShowGrid"
+          >Show Grid
+          <input
+            type="checkbox"
+            id="ShowGrid"
+            name="ShowGrid"
+            checked /></label
+        ><br />
         <label for="DeathAge">How many years to show on grid?</label>
-        <input type="number" id="DeathAge" name="DeathAge" value="90" step="1" min="0" class="NumberInput"><br><br>
-        <button type="reset" class="resetbtn" onclick="resetReload()">Reset</button>
-        <br><br><br><br><br><br>
+        <input
+          type="number"
+          id="DeathAge"
+          name="DeathAge"
+          value="90"
+          step="1"
+          min="0"
+          class="NumberInput"
+        /><br /><br />
+        <button type="reset" class="resetbtn" onclick="resetReload()">
+          Reset
+        </button>
+        <br /><br /><br /><br /><br /><br />
       </form>
     </div>
 
-    <span class="openbtn" onclick="openNav()"><i class="fas fa-ellipsis-h"></i></span>
-    <a target="_blank" rel="noopener noreferrer" href="https://github.com/vitorgt/birthday-percent" class="code">
+    <span class="openbtn" onclick="openNav()"
+      ><i class="fas fa-ellipsis-h"></i
+    ></span>
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://github.com/vitorgt/birthday-percent"
+      class="code"
+    >
       <i class="fas fa-code"></i>
     </a>
 
     <script src="now.js"></script>
   </body>
-
 </html>

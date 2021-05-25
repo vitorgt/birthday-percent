@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: #000;
@@ -12,7 +13,7 @@ canvas {
 /* The side navigation menu */
 .sidenav {
   height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
+  width: 250px; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 2; /* Stay on top */
   top: 0;
@@ -26,7 +27,8 @@ canvas {
 }
 
 /* The navigation menu links */
-.sidenav label, a {
+.sidenav label,
+a {
   font-family: "Courier New";
   text-decoration: none;
   font-size: 15px;
@@ -51,7 +53,7 @@ canvas {
   width: 20px;
   height: 10px;
   font-size: 20px;
-  color: #66FF66;
+  color: #66ff66;
   background-color: transparent;
 }
 
@@ -63,7 +65,7 @@ canvas {
   width: 20px;
   height: 10px;
   font-size: 20px;
-  color: #66FF66;
+  color: #66ff66;
   background-color: transparent;
 }
 
@@ -74,6 +76,10 @@ canvas {
 /* On smaller screens, where height is less than 450px,
  * change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-} 
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
