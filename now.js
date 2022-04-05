@@ -1,21 +1,21 @@
-var BirthDay = null
-var DeathDay = null
-var DateBirthday = null
-var TimeBirthday = null
+let BirthDay = null
+let DeathDay = null
+let DateBirthday = null
+let TimeBirthday = null
 
-var BirthY = null
-var BirthMo = null
-var BirthD = null
-var BirthH = null
-var BirthMi = null
-var DeathAge = null
+let BirthY = null
+let BirthMo = null
+let BirthD = null
+let BirthH = null
+let BirthMi = null
+let DeathAge = null
 
 const Week = new Date(Date.UTC(1970, 0, 8))
 const GridBorder = 25
-var LifeWeeks = 0
-var r = 0
-var c = 0
-var BSize = 0
+let LifeWeeks = 0
+let r = 0
+let c = 0
+let BSize = 0
 
 function HEXtoRGB(hex, alpha) {
   let r = parseInt(hex.slice(1, 3), 16)
@@ -172,19 +172,12 @@ function draw() {
     )
 
     // rect to fill columns at the incomplete row
+    // + actual week, being completed
     rect(
       GridBorder + cRest,
       rComplete * BSize + GridBorder + rRest,
-      cComplete * BSize,
+      cComplete * BSize + BSize * (Weeks % 1),
       BSize,
-    )
-
-    // actual week, being completed
-    rect(
-      cComplete * BSize + GridBorder + cRest,
-      rComplete * BSize + GridBorder + rRest,
-      BSize,
-      BSize * (Weeks % 1),
     )
 
     strokeWeight(1)
@@ -264,9 +257,9 @@ function draw() {
   noStroke()
   fill(localStorage.getItem("Text_rgba"))
 
-  var YearStart = new Date(year(), 0)
-  var YearEnd = new Date(year() + 1, 0)
-  var YearNow = ""
+  let YearStart = new Date(year(), 0)
+  let YearEnd = new Date(year() + 1, 0)
+  let YearNow = ""
   let boolYear = false
   if (localStorage.getItem("ShowYear") == "true") {
     boolYear = true
@@ -276,31 +269,28 @@ function draw() {
     ).toFixed(12)
   }
 
-  var BirthComp = new Date(year(), BirthMo, BirthD, BirthH, BirthMi)
+  let BirthComp = new Date(year(), BirthMo, BirthD, BirthH, BirthMi)
+  let Age = null
+  let AgeStart = null
+  let AgeEnd = null
 
   if (BirthComp <= Now) {
-    var Age = year() - BirthY - 1
-    var AgeStart = new Date(
-      year() - 1,
-      BirthMo,
-      BirthD,
-      BirthH,
-      BirthMi,
-    )
-    var AgeEnd =
+    Age = year() - BirthY - 1
+    AgeStart = new Date(year() - 1, BirthMo, BirthD, BirthH, BirthMi)
+    AgeEnd =
       new Date(year(), BirthMo, BirthD, BirthH, BirthMi) - AgeStart
   } else {
-    var Age = year() - BirthY
-    var AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi)
-    var AgeEnd =
+    Age = year() - BirthY
+    AgeStart = new Date(year(), BirthMo, BirthD, BirthH, BirthMi)
+    AgeEnd =
       new Date(year() + 1, BirthMo, BirthD, BirthH, BirthMi) - AgeStart
   }
   // document.getElementById("DeathAge").min = Age;
-  var AgeNow = (Now - AgeStart) / AgeEnd
+  let AgeNow = (Now - AgeStart) / AgeEnd
 
   let digits = Math.floor(Math.max(0, Math.log10(Age))) + 1
 
-  var AgeText = ""
+  let AgeText = ""
   let boolAge = false
   if (localStorage.getItem("ShowBirthday") == "true") {
     boolAge = true
