@@ -17,6 +17,8 @@ let r = 0
 let c = 0
 let BSize = 0
 
+let markers = { birthdays: [] }
+
 function HEXtoRGB(hex, alpha) {
   let r = parseInt(hex.slice(1, 3), 16)
   let g = parseInt(hex.slice(3, 5), 16)
@@ -60,6 +62,18 @@ function updateDate() {
     (width - GridBorder * 2) / c,
     (height - GridBorder * 2) / r,
   )
+  calculateBirthdays()
+}
+
+function calculateBirthdays() {
+  markers.birthdays = []
+  for (let i = 0; i <= DeathAge; i++) {
+    const a =
+      (new Date(BirthY + i, BirthMo, BirthD, BirthH, BirthMi) -
+        BirthDay) /
+      Week
+    markers.birthdays.push([a % c, Math.floor(a / c)])
+  }
 }
 
 function updateColor(space) {
@@ -104,9 +118,16 @@ function setup() {
   textAlign(CENTER, CENTER)
   textFont("Courier New", width / 12)
 
+  if (localStorage.getItem("ShowSideBar") == null) {
+    localStorage.setItem("ShowSideBar", false) // to close on next page load
+  } else if (localStorage.getItem("ShowSideBar") == "false") {
+    closeNav()
+  }
+
   automateInput("ShowYear", "checked", 1)
   automateInput("ShowBirthday", "checked", 1)
   automateInput("ShowGrid", "checked", 1)
+  automateInput("MarkBirthdays", "checked", 1)
 
   automateInput("DateBirthday", "value", 2)
   automateInput("TimeBirthday", "value", 2)
@@ -119,12 +140,15 @@ function setup() {
   automateInput("Grid_alpha", "value", 3)
   automateInput("Gone_hex", "value", 3)
   automateInput("Gone_alpha", "value", 3)
+  automateInput("Markers_hex", "value", 3)
+  automateInput("Markers_alpha", "value", 3)
 
   updateDate()
   updateColor("BG")
   updateColor("Text")
   updateColor("Grid")
   updateColor("Gone")
+  updateColor("Markers")
 }
 
 function draw() {
@@ -247,6 +271,21 @@ function draw() {
           GridBorder + rRest,
           i * BSize + GridBorder + cRest,
           r * BSize + GridBorder + rRest,
+        )
+      }
+    }
+
+    strokeWeight(1)
+    stroke(localStorage.getItem("Markers_rgba"))
+    noFill()
+
+    if (localStorage.getItem("MarkBirthdays") == "true") {
+      for (const [i, j] of markers.birthdays) {
+        line(
+          GridBorder + cRest + i * BSize,
+          GridBorder + rRest + j * BSize,
+          GridBorder + cRest + i * BSize,
+          GridBorder + rRest + j * BSize + BSize,
         )
       }
     }

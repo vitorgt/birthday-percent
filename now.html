@@ -97,6 +97,22 @@
           max="100"
           class="NumberInput"
         /><br /><br />
+        <label for="Markers_hex">Markers</label>
+        <input
+          type="color"
+          id="Markers_hex"
+          name="Markers_hex"
+          value="#FF0000"
+        />
+        <input
+          type="number"
+          id="Markers_alpha"
+          name="Markers_alpha"
+          value="90"
+          min="0"
+          max="100"
+          class="NumberInput"
+        /><br /><br />
         <label for="DateBirthday">Your Birthday</label>
         <input
           type="date"
@@ -112,7 +128,11 @@
         /><br /><br />
         <label for="ShowYear"
           >Show Year
-          <input type="checkbox" id="ShowYear" name="ShowYear" /></label
+          <input
+            type="checkbox"
+            id="ShowYear"
+            name="ShowYear"
+            checked /></label
         ><br />
         <label for="ShowBirthday"
           >Show Age
@@ -128,6 +148,14 @@
             type="checkbox"
             id="ShowGrid"
             name="ShowGrid"
+            checked /></label
+        ><br />
+        <label for="MarkBirthdays"
+          >Mark birthdays
+          <input
+            type="checkbox"
+            id="MarkBirthdays"
+            name="MarkBirthdays"
             checked /></label
         ><br />
         <label for="DeathAge">How many years to show on grid?</label>
